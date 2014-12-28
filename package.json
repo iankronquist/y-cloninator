@@ -6,6 +6,10 @@
   "scripts": {
     "test": "mocha"
   },
+  "scripts": {
+    "start": "node app.js",
+	"lint": "jshint **.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/iankronquist/y-cloninator"
