@@ -1,0 +1,25 @@
+{
+  "name": "y-cloninator",
+  "version": "0.1.0",
+  "description": "Scrapes HN for github projects",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iankronquist/y-cloninator"
+  },
+  "keywords": [
+    "hacker",
+    "news",
+    "scraper",
+    "github"
+  ],
+  "author": "Ian Kronquist and Evan Tschuy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iankronquist/y-cloninator/issues"
+  },
+  "homepage": "https://github.com/iankronquist/y-cloninator"
+}
