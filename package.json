@@ -4,11 +4,8 @@
   "description": "Scrapes HN for github projects",
   "main": "app.js",
   "scripts": {
-    "test": "mocha"
-  },
-  "scripts": {
     "start": "node app.js",
-	"lint": "jshint **.js"
+    "lint": "jshint **.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +25,7 @@
   "homepage": "https://github.com/iankronquist/y-cloninator",
   "dependencies": {
     "express": "^4.10.6",
-    "nunjucks": "^1.1.0"
+    "nunjucks": "^1.1.0",
+    "pg": "^4.1.1"
   }
 }
