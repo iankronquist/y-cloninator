@@ -8,14 +8,21 @@ Getting started
 ---------------
 * Install node.js on your system
 * Install dependencies
+* Run migrations
 * Run the app
 ```shell
 $ npm install
+$ npm run migrate
 $ npm start
 ```
 
 Testing
 -------
+Tests are run using mocha.
 ```shell
 $ npm test
+```
+You can also run the jshint linter quite easily:
+```shell
+$ npm run lint
 ```
