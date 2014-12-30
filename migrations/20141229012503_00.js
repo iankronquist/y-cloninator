@@ -2,7 +2,7 @@
 
 exports.up = function(knex, Promise) {
    return knex.schema.createTable('hnposts', function (table) {
-    table.primary().integer('id');
+    table.integer('id').primary();
     table.timestamp('retrievedAt');
   }).createTable('ghprojects', function (table) {
     table.integer('hn-id').references('id').inTable('hnposts');
