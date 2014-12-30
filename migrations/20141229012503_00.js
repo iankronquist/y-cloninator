@@ -5,12 +5,12 @@ exports.up = function(knex, Promise) {
     table.integer('id').primary();
     table.timestamp('retrievedAt');
   }).createTable('ghprojects', function (table) {
-    table.integer('hn-id').references('id').inTable('hnposts');
-    table.string('hn-url');
-    table.string('gh-url');
-    table.string('gh-name');
-    table.string('gh-description');
-    table.string('gh-language');
+    table.integer('hn_id').references('id').inTable('hnposts');
+    table.string('hn_url');
+    table.string('gh_url').primary();
+    table.string('gh_name');
+    table.string('gh_description');
+    table.string('gh_language');
   });
 };
 
