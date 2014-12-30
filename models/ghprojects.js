@@ -1,6 +1,5 @@
-module.exports = function (app) {
-  var bookshelf = app.get('bookshelf');
-  var HNProjects = require('./hnposts')(app);
+module.exports = function (bookshelf) {
+  var HNProjects = require('./hnposts')(bookshelf);
   return bookshelf.Model.extend({
     tableName: 'ghprojects',
     hn_id: function () {

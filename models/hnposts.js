@@ -1,5 +1,4 @@
-module.exports = function (app) {
-  var bookshelf = app.get('bookshelf');
+module.exports = function (bookshelf) {
   return bookshelf.Model.extend({
     tableName: 'hnposts'
   });
