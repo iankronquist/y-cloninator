@@ -28,6 +28,7 @@
     "bookshelf": "^0.7.9",
     "express": "^4.10.6",
     "knex": "^0.7.3",
+    "node-schedule": "^0.1.15",
     "nunjucks": "^1.1.0",
     "pg": "^4.1.1"
   },
