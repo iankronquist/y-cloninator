@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "migrate": "knex migrate:latest",
+    "worker": "node clock.js",
     "lint": "jshint **.js"
   },
   "repository": {
