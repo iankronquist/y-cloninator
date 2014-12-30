@@ -26,3 +26,8 @@ You can also run the jshint linter quite easily:
 ```shell
 $ npm run lint
 ```
+
+Configuration
+-------------
+Configuration is done using environment variables. Sane defaults are provided
+for a dev environment, but require dev dependencies to be installed.
