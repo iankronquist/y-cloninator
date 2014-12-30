@@ -3,15 +3,18 @@
 {% block content %}
 	<table id='projects'>
 		{% for project in projects %}
-		<tr class=project>
-			<td class=proj-title>
-				<a href={{ project.gh-url }}> {{ project.gh-name }} </a>
+		<tr class='project'>
+			<td class='proj-title'>
+				<a href='{{ project.gh_url }}'> {{ project.gh_name }} </a>
 			</td>
-			<td class=proj-description>
-				{{ project.description }}
+			<td class='proj-description'>
+				{{ project.gh_description }}
 			</td>
-			<td class=hn-post>
-				<a href={{ project.hn-url }}> Read the comments on HN </a>
+			<td class='proj-language'>
+				{{ project.gh_language }}
+			</td>
+			<td class='hn-post'>
+				<a href='{{ project.hn_url }}'> Read on HN </a>
 			</td>
 		</tr>
 		{% endfor %}
