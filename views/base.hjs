@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Y-Cloninator</title>
+		<link rel=stylesheet type=text/css href=/style.css>
+	</head>
+	<h1>
+		Y-Cloninator
+	</h1>
+	<p id=catchphrase>
+		Just the code ma'am.
+	</p>
+	<p id=page-description>
+		Some of the best content on Hacker News are the
+		links to up-and coming projects on github.
+		Get a list of these awesome projects without the distraction of the rest
+		of Hacker News.
+	</p>
+	{% block content %}
+	{% endblock %}
+</html>

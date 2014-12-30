@@ -1,0 +1,19 @@
+{% extends "base.hjs" %}
+
+{% block content %}
+	<table id='projects'>
+		{% for project in projects %}
+		<tr class=project>
+			<td class=proj-title>
+				<a href={{ project.gh-url }}> {{ project.gh-name }} </a>
+			</td>
+			<td class=proj-description>
+				{{ project.description }}
+			</td>
+			<td class=hn-post>
+				<a href={{ project.hn-url }}> Read the comments on HN </a>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+{% endblock %}
