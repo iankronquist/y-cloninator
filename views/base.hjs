@@ -2,20 +2,24 @@
 <html>
 	<head>
 		<title>Y-Cloninator</title>
-		<link rel=stylesheet type=text/css href=/style.css>
+		<link rel='stylesheet' type='text/css' href='/style.css'>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
 	</head>
 	<h1>
 		Y-Cloninator
 	</h1>
-	<p id=catchphrase>
+	<p id='catchphrase'>
 		Just the code ma'am.
 	</p>
-	<p id=page-description>
+	<p id='page-description'>
 		Some of the best content on Hacker News are the
 		links to up-and coming projects on github.
 		Get a list of these awesome projects without the distraction of the rest
 		of Hacker News.
 	</p>
+	<div class='content'>
 	{% block content %}
 	{% endblock %}
+	</div>
 </html>

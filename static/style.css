@@ -1,0 +1,20 @@
+.content {
+    max-width: 1100px;
+    width: 90%;
+    display: block;
+    margin: auto;
+}
+
+table {
+    width: 100%;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+    font-family: 'Pacifico', cursive;
+    text-align: center;
+    font-size: 3em;
+}

@@ -41,7 +41,7 @@ function saveGithubPost(data, hn_data) {
     var post = JSON.parse(data);
     var model = new GHProjects({
       hn_id: hn_data.id,
-      hn_url: hn_data.url,
+      hn_url: "https://news.ycombinator.com/item?id=" + hn_data.id,
       gh_url: post.html_url,
       gh_name: post.name,
       gh_description: post.description,
