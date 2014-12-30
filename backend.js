@@ -3,9 +3,10 @@
 
 var http = require('follow-redirects').https;
 
-var environment = process.env.Environment || 'development';
-var connection = require('./knexfile')[environment];
-var knex = require('knex')(connection);
+var knex = require('knex')({
+  client: process.env.Client || 'sqlite3',
+  connection: process.env.DATABASE_URL || { filename: 'dev.sqlite3' }
+});
 var bookshelf = require('bookshelf')(knex);
 var GHProjects = require('./models/ghprojects')(bookshelf);
 var HNPosts = require('./models/hnposts')(bookshelf);
@@ -39,7 +40,6 @@ var httpGet = function(host, path, cb) {
 
 function saveGithubPost(data, hn_data) {
     var post = JSON.parse(data);
-    console.log(post.html_url);
     var model = new GHProjects({
       hn_id: hn_data.id,
       hn_url: "https://news.ycombinator.com/item?id=" + hn_data.id,
@@ -48,11 +48,11 @@ function saveGithubPost(data, hn_data) {
       gh_description: post.description,
       gh_language: post.language
     });
-    model.save(undefined, {method: "insert"}).then().catch(function(error) {
-      var time = new Date().getTime();
-      console.log('error: %s, %s', error, time);
-    });
-
+    model.save(undefined, {method: "insert"})
+      .catch(function(error) {
+        var time = new Date().getTime();
+        console.log('error: %s, %s', error, time);
+      });
 }
 
 function checkPost(data) {
@@ -71,15 +71,17 @@ function checkPost(data) {
 function processHNPosts(data) {
     var current_time = new Date();
     var top_list = JSON.parse(data);
+    var collection = bookshelf.Collection.forge({model: HNPosts});
     top_list.forEach(function(entry) {
-      var model = new HNPosts({ id: entry, retrievedAt: current_time });
-      model.save(undefined, {method: "insert"}).then(function() {
-        httpGet(hn_api_host,
+      new HNPosts({id: entry, retrievedAt: current_time})
+        .save(undefined, {method:'insert'})
+        .then(function () {
+          httpGet(hn_api_host,
                 '/v0/item/' + entry + post_details_url_suffix, checkPost);
-      }).catch(function(error) {
-        var time = new Date().getTime();
-        console.log('error: %s, %s', error, time);
-      });
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     });
 }
 
