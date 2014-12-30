@@ -15,3 +15,18 @@ function updateDB() {
 
   dropOldPosts();
 }
+
+function getLatestHNPosts() {
+    // this function:
+    //      1. gets the HN api for top stories
+    //      2. fetches HN api for any new top stories
+    //      3. any new GitHub results, fetch GitHub API and store in DB
+
+}
+
+function dropOldPosts() {
+    // this function:
+    //      1. deletes any items in hnposts older than a day that are not
+    //         GitHub projects
+
+}
