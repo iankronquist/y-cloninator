@@ -3,9 +3,10 @@
 
 var http = require('follow-redirects').https;
 
-var environment = process.env.Environment || 'development';
-var connection = require('./knexfile')[environment];
-var knex = require('knex')(connection);
+var knex = require('knex')({
+  client: process.env.Client || 'sqlite3',
+  connection: process.env.DATABASE_URL || { filename: 'dev.sqlite3' }
+});
 var bookshelf = require('bookshelf')(knex);
 var GHProjects = require('./models/ghprojects')(bookshelf);
 var HNPosts = require('./models/hnposts')(bookshelf);
