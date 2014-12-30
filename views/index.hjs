@@ -2,6 +2,19 @@
 
 {% block content %}
 	<table id='projects'>
+		<tr class='project table-header'>
+			<td class='proj-title'>
+				Project Name
+			</td>
+			<td class='proj-description'>
+				Description
+			</td>
+			<td class='proj-language'>
+				Language
+			</td>
+			<td class='hn-post'>
+				Hacker News
+			</td>
 		{% for project in projects %}
 		<tr class='project'>
 			<td class='proj-title'>
