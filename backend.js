@@ -1,14 +1,21 @@
-"use strict"
-var http = require('follow-redirects').http;
+/*jslint node: true */
+"use strict";
 
-var top_stories_url = 'http://hacker-news.firebaseio.com/v0/topstories.json';
-var post_details_url_prefix = 'http://hacker-news.firebaseio.com/v0/item/';
+var http = require('follow-redirects').https;
+
+var hn_api_host = 'hacker-news.firebaseio.com';
 var post_details_url_suffix = '.json';
 var gh_responses = [];
 
 
-var on_contents = function(url, cb) {
-    var req = http.get(url, function(res)
+var httpGet = function(host, path, cb) {
+    var options = {
+        host: host,
+        path: path,
+        headers: {'User-Agent': 'Mozilla/5.0'}
+    };
+
+    var req = http.get(options, function(res)
     {
         var data = '';
         res.on('data', function(chunk) {
@@ -18,28 +25,32 @@ var on_contents = function(url, cb) {
         res.on('end', function(){
             cb(data);
         });
-    }).end();
+    }).on('error', function(e) {
+        console.log("Got error: " + e.message);
+    });
+};
 
-}
-
-function postUrl(post_id) {
-    return post_details_url_prefix + post_id + post_details_url_suffix;
+function saveGithubPost(data) {
+    var post = JSON.parse(data);
+    console.log(post.html_url);
 }
 
 function checkPost(data) {
     var post_details = JSON.parse(data);
-    var repository_url = post_details.url.match(/(https?:\/\/github\.com\/.*\/.*).*?/);
+    var repository_url = /https?:\/\/github.com(\/.*?\/[^\/]*).*?/.exec(
+        post_details.url);
     if (repository_url) {
-        console.log(repository_url);
-
+        httpGet('api.github.com', '/repos' + repository_url[1], saveGithubPost);
     }
 }
 
 function processHNPosts(data) {
     var top_list = JSON.parse(data);
     top_list.forEach(function(entry) {
-        on_contents(postUrl(entry), checkPost);
+        httpGet(hn_api_host,
+                '/v0/item/' + entry + post_details_url_suffix,
+                checkPost);
     });
 }
 
-on_contents(top_stories_url, processHNPosts);
+httpGet(hn_api_host, '/v0/topstories.json', processHNPosts);

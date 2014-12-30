@@ -1,4 +1,6 @@
-'use strict'
+/*jslint node: true */
+'use strict';
+
 var express = require('express');
 var nunjucks = require('nunjucks');
 var knex = require('knex')({
