@@ -85,4 +85,17 @@ function processHNPosts(data) {
     });
 }
 
-httpGet(hn_api_host, '/v0/topstories.json', processHNPosts);
+function clearOldPosts() {
+    var date = new Date();
+    date.setHours(date.getHours() - 2);
+    knex.select('*').from('hnposts')
+        .leftOuterJoin('ghprojects', 'hnposts.id', 'ghprojects.hn_id')
+        .whereNull('gh_url')
+        .where('retrievedAt', '<', date)
+        .del();
+}
+
+module.exports.httpGet = httpGet;
+module.exports.hn_api_host = hn_api_host;
+module.exports.processHNPosts = processHNPosts;
+module.exports.clearOldPosts = clearOldPosts;
