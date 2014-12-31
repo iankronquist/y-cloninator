@@ -7,12 +7,42 @@
 }
 
 .content {
-    padding-left: 20px;
-    padding-right: 20px;
 }
 
 .header {
     background-color: #57105E;
+}
+
+#filters {
+    padding: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.search {
+    border: 2px solid #333;
+    margin: 0px auto 10px;
+    height: 30px;
+    font-size: 16pt;
+    width: calc(100% - 120px);
+    display: inline-block;
+}
+
+.filter-message p {
+    position: relative;
+    top: -100px;
+}
+
+.submit {
+    background: #5B1662;
+    color: #FFFFFF;
+    width: 100px;
+    border: 2px solid #333;
+    font-size: 16pt;
+    height: 36px;
+    padding: 2px;
+    display: inline-block;
+    margin: 20px auto;
 }
 
 .header-inner {
@@ -24,7 +54,9 @@
 }
 
 table {
+    padding-top: 15px;
     width: 100%;
+    border-spacing: 0px;
 }
 
 .table-header {

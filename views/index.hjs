@@ -1,10 +1,10 @@
 {% extends "base.hjs" %}
 
 {% block content %}
-	<div id=filters>
-		<form method=post>
-			<input type=text name=language placeholder="Filter by language">
-			<input type=submit id=filter-submit>
+	<div id='filters'>
+		<form method='post'>
+			<input type='text' class='search' name='language' placeholder="Filter by language">
+			<input type='submit' class='submit' id='filter-submit'>
 		</form>
 	</div>
 	{% if filter_lang %}
@@ -14,7 +14,6 @@
 			</p>
 		</div>
 	{% endif %}
-	<div id=filer-message>
 	<table id='projects'>
 		<tr class='project table-header'>
 			<td class='proj-title'>
