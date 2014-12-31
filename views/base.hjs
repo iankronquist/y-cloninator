@@ -4,6 +4,12 @@
 		<title>Y-Cloninator</title>
 		<link rel='stylesheet' type='text/css' href='/style.css'>
 	</head>
+	<body>
+	<div class="github-fork-ribbon-wrapper right">
+		<div class="github-fork-ribbon">
+			<a href="https://github.com/iankronquist/y-cloninator">Fork me on GitHub</a>
+		</div>
+	</div>
 	<div class='header'>
 		<div class='header-inner'>
 		<div class='title'>
@@ -35,4 +41,5 @@
 </body>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.1.1/gh-fork-ribbon.min.css" />
 </html>

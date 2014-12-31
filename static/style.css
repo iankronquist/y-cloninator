@@ -53,6 +53,10 @@
     margin-right: auto;
 }
 
+.right .github-fork-ribbon {
+    background-color: #39013F;
+}
+
 table {
     padding-top: 15px;
     width: 100%;
