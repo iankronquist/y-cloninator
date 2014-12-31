@@ -1,32 +1,11 @@
 var schedule = require('node-schedule');
-var environment = process.env.Environment || 'develop';
-var connection = require('knexfile')[environment];
-var knex = require('knex')(connection);
-var bookshelf = require('bookshelf')(knex);
-var GHProjects = require('./models/ghprojects')(bookshelf);
-var HNPosts = require('./models/hnposts')(bookshelf);
+var backend = require('./backend');
 
+// every ten minutes from 8:00-20:00
 var job = schedule.scheduleJob('*/10 8-20 * * *', function () {
-  updateDB();
+    backend.httpGet(
+        backend.hn_api_host,
+        '/v0/topstories.json',
+        backend.processHNPosts);
+    backend.clearOldPosts();
 });
-
-function updateDB() {
-  getLatestHNPosts();
-
-  dropOldPosts();
-}
-
-function getLatestHNPosts() {
-    // this function:
-    //      1. gets the HN api for top stories
-    //      2. fetches HN api for any new top stories
-    //      3. any new GitHub results, fetch GitHub API and store in DB
-
-}
-
-function dropOldPosts() {
-    // this function:
-    //      1. deletes any items in hnposts older than a day that are not
-    //         GitHub projects
-
-}

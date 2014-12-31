@@ -88,7 +88,6 @@ function processHNPosts(data) {
 function clearOldPosts() {
     var date = new Date();
     date.setHours(date.getHours() - 2);
-    console.log(date);
     knex.select('*').from('hnposts')
         .leftOuterJoin('ghprojects', 'hnposts.id', 'ghprojects.hn_id')
         .whereNull('gh_url')
