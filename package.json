@@ -7,7 +7,8 @@
     "start": "node app.js",
     "migrate": "knex migrate:latest",
     "worker": "node clock.js",
-    "lint": "jshint **.js"
+    "lint": "jshint **.js",
+    "update": "node update-db.js"
   },
   "repository": {
     "type": "git",
