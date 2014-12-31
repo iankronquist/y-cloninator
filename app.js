@@ -8,13 +8,11 @@ var knex = require('knex')({
   client: process.env.Client || 'sqlite3',
   connection: process.env.DATABASE_URL || { filename: 'dev.sqlite3' }
 });
-var bookshelf = require('bookshelf')(knex);
 
 var app = express();
 app.use(express.static(__dirname + '/static'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set('bookshelf', bookshelf);
 app.set('knex', knex);
 
 nunjucks.configure('views', {
