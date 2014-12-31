@@ -7,9 +7,6 @@ var knex = require('knex')({
   client: process.env.CLIENT || 'sqlite3',
   connection: process.env.DATABASE_URL || { filename: 'dev.sqlite3' }
 });
-var bookshelf = require('bookshelf')(knex);
-var GHProjects = require('./models/ghprojects')(bookshelf);
-var HNPosts = require('./models/hnposts')(bookshelf);
 
 
 var hn_api_host = 'hacker-news.firebaseio.com';
@@ -40,19 +37,17 @@ var httpGet = function(host, path, cb) {
 
 function saveGithubPost(data, hn_data) {
     var post = JSON.parse(data);
-    var model = new GHProjects({
+    knex('ghprojects').insert({
       hn_id: hn_data.id,
       hn_url: "https://news.ycombinator.com/item?id=" + hn_data.id,
       gh_url: post.html_url,
       gh_name: post.name,
       gh_description: post.description,
       gh_language: post.language
+    })
+    .catch(function(error) {
+      console.log(error);
     });
-    model.save(undefined, {method: "insert"})
-      .catch(function(error) {
-        var time = new Date().getTime();
-        console.log('error: %s, %s', error, time);
-      });
 }
 
 function checkPost(data) {
@@ -71,10 +66,8 @@ function checkPost(data) {
 function processHNPosts(data) {
     var current_time = new Date();
     var top_list = JSON.parse(data);
-    var collection = bookshelf.Collection.forge({model: HNPosts});
     top_list.forEach(function(entry) {
-      new HNPosts({id: entry, retrievedAt: current_time})
-        .save(undefined, {method:'insert'})
+      knex('hnposts').insert({id: entry, retrievedAt: current_time})
         .then(function () {
           httpGet(hn_api_host,
                 '/v0/item/' + entry + post_details_url_suffix, checkPost);
