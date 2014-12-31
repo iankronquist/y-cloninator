@@ -1,3 +1,5 @@
+var backend = require('./backend');
+
 module.exports = function(app) {
   var knex = app.get('knex');
   app.get('/', function (req, res) {
@@ -16,4 +18,14 @@ module.exports = function(app) {
         });
       });
   });
+  app.get('/refresh-content', function (req, res) {
+    console.log("Starting job.");
+    backend.httpGet(
+        backend.hn_api_host,
+        '/v0/topstories.json',
+        backend.processHNPosts);
+        backend.clearOldPosts();
+    res.redirect('/');
+  });
+
 };
