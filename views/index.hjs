@@ -4,7 +4,7 @@
 	<div id='filters'>
 		<form method='post'>
 			<input type='text' class='search' name='language' placeholder="Filter by language">
-			<input type='submit' class='submit' id='filter-submit'>
+			<input type='submit' class='submit' id='filter-submit' value='Search'>
 		</form>
 	</div>
 	{% if filter_lang %}
