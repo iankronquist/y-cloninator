@@ -5,7 +5,7 @@ var express = require('express');
 var nunjucks = require('nunjucks');
 var bodyParser = require('body-parser');
 var knex = require('knex')({
-  client: process.env.Client || 'sqlite3',
+  client: process.env.CLIENT || 'sqlite3',
   connection: process.env.DATABASE_URL || { filename: 'dev.sqlite3' }
 });
 
@@ -22,6 +22,6 @@ nunjucks.configure('views', {
 
 var routes = require('./routes')(app);
 
-app.listen(process.env.Port || 8000, function () {
+app.listen(process.env.PORT || 8000, function () {
   console.log('App now listening on %s', process.env.Port || 8000);
 });
