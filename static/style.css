@@ -55,6 +55,10 @@ body {
     top: -10px;
 }
 
+td {
+    padding-bottom: 5px;
+}
+
 h1 {
     font-family: 'Pacifico', cursive;
     font-size: 3em;
