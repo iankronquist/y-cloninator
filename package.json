@@ -1,6 +1,6 @@
 {
   "name": "y-cloninator",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Scrapes HN for github projects",
   "main": "app.js",
   "scripts": {
