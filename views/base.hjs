@@ -3,15 +3,12 @@
 	<head>
 		<title>Y-Cloninator</title>
 		<link rel='stylesheet' type='text/css' href='/style.css'>
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
-		<link href='http://fonts.googleapis.com/css?family=Merriweather:300' rel='stylesheet' type='text/css'>
-		<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
 	</head>
 	<div class='header'>
 		<div class='header-inner'>
 		<div class='title'>
 		<h1>
-			Y-Cloninator
+			<a class="h1link" href="/">Y-Cloninator</a>
 		</h1>
 		</div>
 		<div class='catchphrase'>
@@ -35,4 +32,7 @@
 	{% endblock %}
 	</div>
 	</div>
+</body>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
 </html>
