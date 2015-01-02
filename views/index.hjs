@@ -16,16 +16,16 @@
 	{% endif %}
 	<table id='projects'>
 		<tr class='project table-header'>
-			<td class='proj-title'>
+			<td class='proj-title nowrap'>
 				Project Name
 			</td>
 			<td class='proj-description'>
 				Description
 			</td>
-			<td class='proj-language'>
+			<td class='proj-language nowrap'>
 				Language
 			</td>
-			<td class='hn-post'>
+			<td class='hn-post nowrap'>
 				Hacker News
 			</td>
 		{% for project in projects %}

@@ -9,6 +9,10 @@
 .content {
 }
 
+.nowrap {
+    white-space: nowrap;
+}
+
 .header {
     background-color: #57105E;
 }
