@@ -6,7 +6,13 @@
     height: calc(100% - 110px);
 }
 
-.content {
+.proj-title {
+    padding-right: 10px;
+}
+
+.proj-language {
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 .nowrap {
@@ -65,6 +71,7 @@ table {
     padding-top: 15px;
     width: 100%;
     border-spacing: 0px;
+    padding-bottom: 10px;
 }
 
 .table-header {
