@@ -10,7 +10,7 @@ module.exports = function(app) {
   app.post('/', function (req, res) {
     knex.select('*')
       .from('ghprojects')
-      .where({ gh_language: req.body.language })
+      .whereRaw('LOWER(gh_language) = LOWER(?)', [req.body.language])
       .then(function (projects) {
         return res.render('index.hjs', {
           filter_lang: req.body.language,
