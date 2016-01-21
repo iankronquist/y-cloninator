@@ -23,14 +23,6 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/:language', function (req, res) {
-    return searchLanguage(res, req.params.language);
-  });
-
-  app.post('/', function (req, res) {
-    return searchLanguage(res, req.body.language);
-  });
-
   app.get('/refresh-content', function (req, res) {
     console.log("Starting job.");
     backend.httpGet(
@@ -39,6 +31,14 @@ module.exports = function(app) {
         backend.processHNPosts);
         backend.clearOldPosts();
     res.redirect('/');
+  });
+
+  app.get('/:language', function (req, res) {
+    return searchLanguage(res, req.params.language);
+  });
+
+  app.post('/', function (req, res) {
+    return searchLanguage(res, req.body.language);
   });
 
 };
