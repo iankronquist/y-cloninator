@@ -7,6 +7,7 @@ module.exports = function(app) {
     knex.select('*')
       .from('ghprojects')
       .whereRaw('LOWER(gh_language) = LOWER(?)', [language])
+      .orderBy('hn_id', 'desc')
       .then(function (projects) {
         return res.render('index.hjs', {
           filter_lang: language,
@@ -16,7 +17,8 @@ module.exports = function(app) {
   };
 
   app.get('/', function (req, res) {
-    knex.select('*').from('ghprojects').then(function(projects) {
+    knex.select('*').from('ghprojects')
+    .orderBy('hn_id', 'desc').then(function(projects) {
       return res.render('index.hjs', { projects: projects });
     });
   });
