@@ -2,22 +2,27 @@ var backend = require('./backend');
 
 module.exports = function(app) {
   var knex = app.get('knex');
-  app.get('/', function (req, res) {
-    knex.select('*').from('ghprojects').then(function(projects) {
-      return res.render('index.hjs', { projects: projects });
-    });
-  });
-  app.post('/', function (req, res) {
+
+  var searchLanguage = function(res, language) {
     knex.select('*')
       .from('ghprojects')
-      .where({ gh_language: req.body.language })
+      .whereRaw('LOWER(gh_language) = LOWER(?)', [language])
+      .orderBy('hn_id', 'desc')
       .then(function (projects) {
         return res.render('index.hjs', {
-          filter_lang: req.body.language,
+          filter_lang: language,
           projects: projects
         });
       });
+  };
+
+  app.get('/', function (req, res) {
+    knex.select('*').from('ghprojects')
+    .orderBy('hn_id', 'desc').then(function(projects) {
+      return res.render('index.hjs', { projects: projects });
+    });
   });
+
   app.get('/refresh-content', function (req, res) {
     console.log("Starting job.");
     backend.httpGet(
@@ -26,6 +31,14 @@ module.exports = function(app) {
         backend.processHNPosts);
         backend.clearOldPosts();
     res.redirect('/');
+  });
+
+  app.get('/:language', function (req, res) {
+    return searchLanguage(res, req.params.language);
+  });
+
+  app.post('/', function (req, res) {
+    return searchLanguage(res, req.body.language);
   });
 
 };

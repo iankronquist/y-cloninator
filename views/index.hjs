@@ -2,7 +2,7 @@
 
 {% block content %}
 	<div id='filters'>
-		<form method='post'>
+		<form method='post' action='/'>
 			<input type='text' class='search' name='language' placeholder="Filter by language">
 			<input type='submit' class='submit' id='filter-submit' value='Search'>
 		</form>
@@ -37,7 +37,7 @@
 				{{ project.gh_description }}
 			</td>
 			<td class='proj-language'>
-				{{ project.gh_language }}
+				<a href="/{{ project.gh_language }}">{{ project.gh_language }}</a>
 			</td>
 			<td class='hn-post'>
 				<a href='{{ project.hn_url }}'> Read on HN </a>
