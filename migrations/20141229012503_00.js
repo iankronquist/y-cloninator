@@ -9,6 +9,7 @@ exports.up = function(knex, Promise) {
     table.string('hn_url');
     table.string('gh_url').primary();
     table.string('gh_name');
+    table.integer('gh_stars');
     table.string('gh_description');
     table.string('gh_language');
   });
