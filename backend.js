@@ -8,6 +8,7 @@ var knex = require('knex')({
   connection: process.env.DATABASE_URL || { filename: 'dev.sqlite3' }
 });
 
+var Feed = require('feed');
 
 var hn_api_host = 'hacker-news.firebaseio.com';
 var post_details_url_suffix = '.json';
@@ -37,15 +38,14 @@ var httpGet = function(host, path, cb) {
 
 function saveGithubPost(data, hn_data) {
     var post = JSON.parse(data);
-    knex('ghprojects').insert({
+    return knex('ghprojects').insert({
       hn_id: hn_data.id,
       hn_url: "https://news.ycombinator.com/item?id=" + hn_data.id,
       gh_url: post.html_url,
       gh_name: post.name,
       gh_description: post.description,
       gh_language: post.language
-    })
-    .catch(function(error) {
+    }).catch(function(error) {
       console.log(error);
     });
 }
@@ -63,6 +63,33 @@ function checkPost(data) {
     }
 }
 
+function createFeed() {
+  var feed = new Feed({
+    title:          'Y-Cloninator',
+    description:    'Open source on Hacker News without the distractions!',
+    link:           'https://ycloninator.herokuapp.com/',
+
+    author: {
+        name:       'Evan Tschuy & Ian Kronquist',
+        email:      'evan@tschuy.com',
+        link:       'http://tschuy.com'
+    }
+  });
+  knex.select('*').from('ghprojects') //.whereNotNull('date')
+  .orderBy('hn_id', 'desc').limit(50).then(function(projects) {
+    for(var project of projects) {
+      feed.item({
+        title: project.gh_name,
+        link: project.gh_url,
+        description: project.gh_language + ": " + project.gh_description,
+        author: [ { name: 'Y-Cloninator' } ],
+        date: new Date()
+      });
+    }
+    console.log(feed.render('rss-2.0'));
+  }).catch(function(error) { console.log(error) });
+}
+
 function processHNPosts(data) {
     var current_time = new Date();
     var top_list = JSON.parse(data);
@@ -71,7 +98,8 @@ function processHNPosts(data) {
         .then(function () {
           httpGet(hn_api_host,
                 '/v0/item/' + entry + post_details_url_suffix, checkPost);
-        })
+        }).then(createFeed) // TODO find better way to run this
+                            // only one time per refresh
         .catch(function(error) {
           console.log(error);
         });
