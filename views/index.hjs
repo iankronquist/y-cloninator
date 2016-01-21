@@ -37,7 +37,7 @@
 				{{ project.gh_description }}
 			</td>
 			<td class='proj-language'>
-				{{ project.gh_language }}
+				<a href="/{{ project.gh_language }}">{{ project.gh_language }}</a>
 			</td>
 			<td class='hn-post'>
 				<a href='{{ project.hn_url }}'> Read on HN </a>
