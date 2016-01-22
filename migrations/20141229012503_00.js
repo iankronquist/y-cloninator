@@ -1,16 +1,17 @@
 'use strict';
 
 exports.up = function(knex, Promise) {
-   return knex.schema.createTable('hnposts', function (table) {
-    table.integer('id').primary();
-    table.timestamp('retrievedAt');
-  }).createTable('ghprojects', function (table) {
-    table.integer('hn_id').references('id').inTable('hnposts');
-    table.string('hn_url');
+   return knex.schema.createTable('ghprojects', function (table) {
     table.string('gh_url').primary();
     table.string('gh_name');
     table.string('gh_description');
     table.string('gh_language');
+  }).createTable('hnposts', function (table) {
+   table.integer('id').primary();
+   table.string('gh_url').references('gh_url').inTable('ghprojects');
+   table.timestamp('retrievedAt');
+   table.string('hn_url');
+   table.string('hn_time');
   });
 };
 

@@ -34,12 +34,15 @@
 			<td class='proj-language nowrap'>
 				Language
 			</td>
-			<td class='hn-post nowrap'>
-				Hacker News
-			</td>
 			<td class='gh-stars nowrap'>
 				Stars
 			</td>
+			<td class='hn-post nowrap'>
+				Hacker News
+			</td>
+			<td class='hn-post nowrap'>
+			</td>
+		</tr>
 		{% for project in projects %}
 		<tr class='project'>
 			<td class='proj-title'>
@@ -52,12 +55,29 @@
 			<td class='proj-language'>
 				<a href="/{{ project.gh_language | urlencode }}">{{ project.gh_language }}</a>
 			</td>
-			<td class='hn-post'>
-				<a href='{{ project.hn_url }}'> Read on HN </a>
-			</td>
 			<td class='gh-stars nowrap'>
 				🌟  {{project.gh_stars}}
 			</td>
+			{% if project.hn_first_mention_timestamp == project.hn_last_mention_timestamp %}
+			<td class='hn-post'>
+				<a href='{{ hnItemUrl(project.hn_first_mention_id) }}' title='{{ displayUTCDate(project.hn_first_mention_timestamp) }} '>
+					Read on HN
+				</a>
+			</td>
+			<td class='hn-post'>
+			</td>
+			{% else %}
+			<td class='hn-post'>
+				<a href='{{ hnItemUrl(project.hn_first_mention_id) }}' title='{{ displayUTCDate(project.hn_first_mention_timestamp) }} '>
+					Oldest
+				</a>
+			</td>
+			<td class='hn-post'>
+				<a href='{{ hnItemUrl(project.hn_last_mention_id) }}' title='{{ displayUTCDate(project.hn_last_mention_timestamp) }} '>
+					Newest
+				</a>
+			</td>
+			{% endif %}
 		</tr>
 		{% endfor %}
 	</table>
