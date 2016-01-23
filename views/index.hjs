@@ -1,9 +1,18 @@
 {% extends "base.hjs" %}
 
+{% block script %}
+<script>
+	document.getElementById("filter-form").onsubmit = function() {
+    window.location.href = "/" + encodeURIComponent(document.getElementById("filter-language").value);
+		return false;
+  }
+</script>
+{% endblock %}
+
 {% block content %}
 	<div id='filters'>
-		<form method='post' action='/'>
-			<input type='text' class='search' name='language' placeholder="Filter by language">
+		<form id='filter-form'>
+			<input type='text' class='search' id='filter-language' name='language' placeholder="Filter by language">
 			<input type='submit' class='submit' id='filter-submit' value='Search'>
 		</form>
 	</div>
