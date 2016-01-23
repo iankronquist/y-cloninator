@@ -45,7 +45,7 @@
 			<td class='hn-post'>
 				<a href='{{ project.hn_url }}'> Read on HN </a>
 			</td>
-			<td class='gh-stars'>
+			<td class='gh-stars nowrap'>
 				🌟  {{project.gh_stars}}
 			</td>
 		</tr>
