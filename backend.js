@@ -21,8 +21,7 @@ var httpGet = function(host, path, cb) {
         headers: {'User-Agent': 'Mozilla/5.0'}
     };
 
-    var req = http.get(options, function(res)
-    {
+    var req = http.get(options, function(res) {
         var data = '';
         res.on('data', function(chunk) {
             data += chunk.toString();
@@ -30,6 +29,9 @@ var httpGet = function(host, path, cb) {
         res.on('end', function(){
             cb(data);
         });
+        if (res.statusCode != 200) {
+          console.log('HTTP Status code not OK!', host, path, data);
+        }
     }).on('error', function(e) {
         console.log("Got error: " + e.message);
     });
