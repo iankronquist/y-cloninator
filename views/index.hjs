@@ -37,6 +37,9 @@
 			<td class='hn-post nowrap'>
 				Hacker News
 			</td>
+			<td class='gh-stars nowrap'>
+				Stars
+			</td>
 		{% for project in projects %}
 		<tr class='project'>
 			<td class='proj-title'>
@@ -50,6 +53,9 @@
 			</td>
 			<td class='hn-post'>
 				<a href='{{ project.hn_url }}'> Read on HN </a>
+			</td>
+			<td class='gh-stars nowrap'>
+				🌟  {{project.gh_stars}}
 			</td>
 		</tr>
 		{% endfor %}

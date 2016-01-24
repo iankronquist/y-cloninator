@@ -43,6 +43,7 @@ function saveGithubPost(data, hn_data) {
       gh_url: post.html_url,
       gh_name: post.name,
       gh_description: post.description,
+      gh_stars: post.stargazers_count,
       gh_language: post.language
     })
     .catch(function(error) {
