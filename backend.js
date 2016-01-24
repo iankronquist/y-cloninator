@@ -37,6 +37,11 @@ var httpGet = function(host, path, cb) {
 
 function saveGithubPost(data, hn_data) {
     var post = JSON.parse(data);
+    if (!post.name) { // probably an API ratelimiting issue
+      console.error("Could not get Github post! Received data: ");
+      console.error(post);
+      return;
+    }
     knex('ghprojects').insert({
       hn_id: hn_data.id,
       hn_url: "https://news.ycombinator.com/item?id=" + hn_data.id,
@@ -45,6 +50,8 @@ function saveGithubPost(data, hn_data) {
       gh_description: post.description,
       gh_stars: post.stargazers_count,
       gh_language: post.language
+    }).then(function() {
+      console.log("New project: " + post.name + " | hn id: " + hn_data.id);
     })
     .catch(function(error) {
       console.log(error);

@@ -46,7 +46,8 @@
 				<a href='{{ project.gh_url }}'> {{ project.gh_name }} </a>
 			</td>
 			<td class='proj-description'>
-				{{ project.gh_description }}
+				<div class='proj-description-content'>
+					<div class='proj-description-shadow'></div>{{ project.gh_description }}</div>
 			</td>
 			<td class='proj-language'>
 				<a href="/{{ project.gh_language | urlencode }}">{{ project.gh_language }}</a>
