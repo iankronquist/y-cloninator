@@ -13,7 +13,6 @@ var hn_api_host = 'hacker-news.firebaseio.com';
 var post_details_url_suffix = '.json';
 var gh_responses = [];
 
-
 var httpGet = function(host, path, cb) {
     var options = {
         host: host,
@@ -37,68 +36,86 @@ var httpGet = function(host, path, cb) {
     });
 };
 
-function saveGithubPost(data, hn_data) {
-    var post = JSON.parse(data);
-    if (!post.name) { // probably an API ratelimiting issue
-      console.error("Could not get Github post! Received data: ");
-      console.error(post);
+function saveGithubPost(data) {
+    var project = JSON.parse(data);
+    if (!project.name) { // probably an API ratelimiting issue
+      console.error("Could not get Github project! Received data: ");
+      console.error(project);
       return;
     }
     knex('ghprojects').insert({
-      hn_id: hn_data.id,
-      hn_url: "https://news.ycombinator.com/item?id=" + hn_data.id,
-      gh_url: post.html_url,
-      gh_name: post.name,
-      gh_description: post.description,
-      gh_stars: post.stargazers_count,
-      gh_language: post.language
+      gh_url: project.html_url,
+      gh_name: project.name,
+      gh_description: project.description,
+      gh_stars: project.stargazers_count,
+      gh_language: project.language
     }).then(function() {
-      console.log("New project: " + post.name + " | hn id: " + hn_data.id);
-    })
-    .catch(function(error) {
+      console.log("New project: " + project.name)
+    }).catch(function(error) {
       console.log(error);
     });
+}
+
+function hnItemUrl(itemId) {
+  return 'https://news.ycombinator.com/item?id=' + itemId;
 }
 
 function checkPost(data) {
     var post_details = JSON.parse(data);
     var repository_url = /https?:\/\/github.com(\/.*?\/[^\/]*).*?/.exec(
         post_details.url);
-    if (repository_url) {
-        httpGet('api.github.com', '/repos' + repository_url[1],
-          function(gh_api_data) {
-            saveGithubPost(gh_api_data, post_details);
-          }
-        );
+    if (!repository_url) {
+      return;
     }
+    knex('hnposts').insert({
+      id: post_details.id,
+      gh_url: repository_url[0],
+      retrievedAt: Date.now(),
+      hn_url: hnItemUrl(post_details.id),
+      hn_time: post_details.time
+    }).then(function () {
+      httpGet('api.github.com', '/repos' + repository_url[1], saveGithubPost);
+    }).catch(function(error) {
+      console.error(error);
+    });
 }
 
 function processHNPosts(data) {
     var current_time = new Date();
     var top_list = JSON.parse(data);
     top_list.forEach(function(entry) {
-      knex('hnposts').insert({id: entry, retrievedAt: current_time})
-        .then(function () {
-          httpGet(hn_api_host,
-                '/v0/item/' + entry + post_details_url_suffix, checkPost);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+      httpGet(hn_api_host,
+        '/v0/item/' + entry + post_details_url_suffix, checkPost);
     });
 }
 
 function clearOldPosts() {
     var date = new Date();
     date.setHours(date.getHours() - 2);
-    knex.select('*').from('hnposts')
-        .leftOuterJoin('ghprojects', 'hnposts.id', 'ghprojects.hn_id')
-        .whereNull('gh_url')
-        .where('retrievedAt', '<', date)
-        .del();
+
+    // Split into two queries - join deletes aren't supported
+    // https://github.com/tgriesser/knex/issues/873
+    knex('hnposts')
+      .distinct('gh_url')
+      .select()
+      .where('retrievedAt', '<', date)
+      .then(function(posts) {
+        var ghUrls = posts.map(function(post) { return post.gh_url });
+
+        knex('hnposts')
+          .whereIn('gh_url', ghUrls)
+          .del();
+
+        knex('ghprojects')
+          .whereIn('gh_url', ghUrls)
+          .del();
+      }).catch(function(error) {
+        console.error(error);
+      });
 }
 
 module.exports.httpGet = httpGet;
 module.exports.hn_api_host = hn_api_host;
 module.exports.processHNPosts = processHNPosts;
 module.exports.clearOldPosts = clearOldPosts;
+module.exports.hnItemUrl = hnItemUrl;

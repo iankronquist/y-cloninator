@@ -12,7 +12,7 @@ function runJob() {
         backend.hn_api_host,
         '/v0/topstories.json',
         backend.processHNPosts);
-        backend.clearOldPosts();
+    backend.clearOldPosts();
 }
 
 module.exports.forceUpdate = runJob;
