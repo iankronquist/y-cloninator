@@ -1,7 +1,12 @@
+'use strict';
+
 var backend = require('./backend');
 
 module.exports = function(app) {
   var knex = app.get('knex');
+  // 30 minutes
+  var lastUpdated = 0;
+  const halfHour = 30*60*60;
 
   var searchLanguage = function(res, language) {
     knex.select('*')
@@ -24,12 +29,20 @@ module.exports = function(app) {
   });
 
   app.get('/refresh-content', function (req, res) {
-    console.log("Starting job.");
-    backend.httpGet(
-        backend.hn_api_host,
-        '/v0/topstories.json',
-        backend.processHNPosts);
-        backend.clearOldPosts();
+    // Noop if we have refreshed the content in the past 1/2 hour
+    // Of course this counter is reset if the app is restarted
+    let rightNow = Date.now();
+    if (rightNow >= (lastUpdated + halfHour)) {
+      console.log('Refreshing DB', rightNow);
+      lastUpdated = rightNow;
+      backend.httpGet(
+          backend.hn_api_host,
+          '/v0/topstories.json',
+          backend.processHNPosts);
+          backend.clearOldPosts();
+    } else {
+      console.log('Not refreshing. Last new post retreived at ', lastUpdated);
+    }
     res.redirect('/');
   });
 
