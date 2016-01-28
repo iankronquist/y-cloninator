@@ -27,17 +27,17 @@
   },
   "homepage": "https://github.com/iankronquist/y-cloninator",
   "dependencies": {
-    "body-parser": "^1.10.0",
-    "express": "^4.10.6",
-    "follow-redirects": "0.0.3",
-    "knex": "^0.7.3",
-    "node-schedule": "^0.1.15",
-    "nunjucks": "^1.1.0",
-    "pg": "^4.1.1"
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4",
+    "follow-redirects": "0.0.7",
+    "knex": "^0.9.0",
+    "node-schedule": "^0.6.0",
+    "nunjucks": "^2.3.0",
+    "pg": "^4.4.4"
   },
   "devDependencies": {
-    "mocha": "^1.21.3",
-    "sqlite3": "^3.0.4",
-    "jshint": "^2.5.11"
+    "mocha": "^2.4.4",
+    "sqlite3": "^3.1.1",
+    "jshint": "^2.9.1"
   }
 }
